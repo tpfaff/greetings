@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="general_greetings">
+        <item>@string/welcome</item>
+        <item>@string/enjoy</item>
+        <item>@string/thank_you</item>
+        <item>@string/happy</item>
+        <item>@string/thank_you</item>
+        <item>@string/nice_to_see_you</item>
+        <item>@string/happy</item>
+        <item>@string/hello</item>
+        <item>@string/greetings</item>
+        <item>@string/hey_thanks</item>
+        <item>@string/welcome_friend</item>
+    </string-array>
+
+    <string-array name="weather_greetings">
+        <item>@string/nice_day</item>
+        <item>@string/raining</item>
+    </string-array>
+
+    <string-array name="time_sensitive_greetings">
+        <item>@string/closing_soon</item>
+        <item>@string/looking_good</item>
+    </string-array>
+</resources>
