@@ -1,4 +1,4 @@
-package com.wajumbie.robot;
+package com.wajumbie.robot.heart_screen;
 
 import android.support.annotation.NonNull;
 

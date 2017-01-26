@@ -9,8 +9,11 @@
     <string name="greetings">Greetings</string>
     <string name="hey_thanks">Hey, thanks for coming by!</string>
     <string name="welcome_friend">Welcome,friend.</string>
+    <string name="salutations">Salutations friend!</string>
     <string name="looking_good">Hi! Looking good today!</string>
-    <string name="nice_day">Welcome, isn\'t it nice out today?</string>
     <string name="closing_soon">Welcome, we close in %$1d minutes, just to let you know</string>
-    <string name="raining">Hello, looking for an umbrella? They are in the back.</string>
+
+    <string name="weather_nice_day">Welcome, isn\'t it nice out today?</string>
+    <string name="weather_raining">Hello, looking for an umbrella? They are in the back.</string>
+    <string name="weather_cloudy">Come in, come in, it looks cold out today!</string>
 </resources>

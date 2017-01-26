@@ -1,4 +1,4 @@
-package com.wajumbie.robot;
+package com.wajumbie.robot.heart_screen;
 
 import android.util.Log;
 
@@ -7,6 +7,7 @@ import com.aldebaran.qi.sdk.object.actuation.Frame;
 import com.aldebaran.qi.sdk.object.geometry.TransformTime;
 import com.aldebaran.qi.sdk.object.interaction.Human;
 import com.aldebaran.qi.sdk.object.interaction.Interaction;
+import com.wajumbie.robot.MyApp;
 import com.wajumbie.robot.utils.VectorUtils;
 
 import java.util.List;

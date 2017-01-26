@@ -12,11 +12,13 @@
         <item>@string/greetings</item>
         <item>@string/hey_thanks</item>
         <item>@string/welcome_friend</item>
+        <item>@string/salutations</item>
     </string-array>
 
     <string-array name="weather_greetings">
-        <item>@string/nice_day</item>
-        <item>@string/raining</item>
+        <item>@string/weather_nice_day</item>
+        <item>@string/weather_raining</item>
+        <item>@string/weather_cloudy</item>
     </string-array>
 
     <string-array name="time_sensitive_greetings">
