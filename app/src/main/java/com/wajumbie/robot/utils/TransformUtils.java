@@ -7,7 +7,7 @@ import com.aldebaran.qi.sdk.object.geometry.Vector3;
  * Created by Tyler on 1/23/2017.
  */
 
-public class VectorUtils {
+public class TransformUtils {
 
 
     public static double distance(Transform transform) {

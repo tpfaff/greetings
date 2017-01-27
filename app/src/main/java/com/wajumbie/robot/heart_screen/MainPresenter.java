@@ -8,10 +8,12 @@ import com.aldebaran.qi.sdk.object.geometry.TransformTime;
 import com.aldebaran.qi.sdk.object.interaction.Human;
 import com.aldebaran.qi.sdk.object.interaction.Interaction;
 import com.wajumbie.robot.MyApp;
-import com.wajumbie.robot.utils.VectorUtils;
+import com.wajumbie.robot.utils.TransformUtils;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
+
 
 /**
  * Created by Tyler on 1/23/2017.
@@ -22,10 +24,15 @@ public class MainPresenter extends BasePresenter<Object, MainActivity> implement
 
     public static final String TAG = MainPresenter.class.getSimpleName();
 
-    public MainPresenter(MainActivity mainActivity) {
-        bindView(mainActivity);
-    }
+    Random random = new Random();
 
+    //todo populate for real robot
+    List<String> greetings;
+    List<String> animationIds;
+
+
+    public MainPresenter() {
+    }
 
     @Override
     public void startDetectingHumans() {
@@ -43,7 +50,7 @@ public class MainPresenter extends BasePresenter<Object, MainActivity> implement
 
     @Override
     public void greetHuman(Human human) {
-
+        //todo stub for real robot
     }
 
     private void displayHumansInfo(Actuation actuation, List<Human> humans) {
@@ -51,10 +58,11 @@ public class MainPresenter extends BasePresenter<Object, MainActivity> implement
             Frame robotFrame = actuation.robotFrame();
             int i = 0;
             for (Human human : humans) {
+                greetHuman(human);
                 Frame humanFrame = human.getHeadFrame();
                 // currently, lastKnowTransform never returns (the future never finishes)
                 TransformTime tf = humanFrame.lastKnownTransform(robotFrame).get();
-                double distance = VectorUtils.distance(tf.getTransform());
+                double distance = TransformUtils.distance(tf.getTransform());
                 Log.v(TAG, "human " + i++ + " at " + distance);
             }
         } catch (ExecutionException e) {

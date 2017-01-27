@@ -43,15 +43,16 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
 
     private List<Integer> animationIds;
 
-    private Random random = new Random();
+    private Random random;
 
     //How often a mock human will be detected in milliseconds
     private final int HUMAN_DETECTION_DELAY = 10000;
 
 
-    public MockMainPresenter(MainActivity mainActivity) {
-        bindView(mainActivity);
+    public MockMainPresenter() {
+    }
 
+    private void init() {
         List<Human> mockHumans = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Human mockHuman = new Human(QiContext.get(view()), null);
@@ -61,7 +62,10 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
 
         initGreetings();
         initAnimationFiles();
+
+        random = new Random();
     }
+
 
     private void initGreetings() {
         greetings = new ArrayList<>(Arrays.asList(view().getResources().getStringArray(R.array.general_greetings)));
@@ -86,6 +90,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
     public void startDetectingHumans() {
         Log.d(TAG, "startDetectingHumans");
 
+        init();
 
         //Emit mock humans at an interval
         //Use concatMap to respect order of arrival, or else timing will not work
@@ -102,7 +107,9 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
                         //delay operates by default on the computation thread
                         //so we must explicitly deliver the result on the main thread
                         //and we can't just observeOn(AndroidSchedulers.mainThread()) up above
-                        return Observable.just(human).delay(HUMAN_DETECTION_DELAY, TimeUnit.MILLISECONDS,/*explicit main thread*/AndroidSchedulers.mainThread());
+                        return Observable
+                                .just(human)
+                                .delay(HUMAN_DETECTION_DELAY, TimeUnit.MILLISECONDS,/*explicit main thread*/AndroidSchedulers.mainThread());
                     }
                 })
                 .doOnError(new Consumer<Throwable>() {
@@ -143,6 +150,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
         say.run(greetings.get(randomAnimationIndex));
     }
 
+
     /***
      * Get the weather and add a weather relevant greeting
      * @param zip
@@ -157,13 +165,14 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
                         Log.e(TAG, "Couldn't get weather", throwable);
                     }
                 })
+                //return a weather type so we could be more dynamic with the result in the future
                 .map(new Function<WeatherResponse, WEATHER_TYPE>() {
                     @Override
                     public WEATHER_TYPE apply(WeatherResponse weatherResponse) throws Exception {
                         if (weatherResponse.getWeather().size() > 0) {
                             String weatherDescription = weatherResponse.getWeather().get(0).getDescription();
                             if (weatherDescription.toLowerCase().contains("rain")) {
-                                Log.i(TAG, "It's rain");
+                                Log.i(TAG, "It's raining");
                                 return WEATHER_TYPE.RAIN;
                             } else if (weatherDescription.toLowerCase().contains("cloud")) {
                                 Log.i(TAG, "It's cloudy");
@@ -177,6 +186,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
                         return null;
                     }
                 })
+                //just grab a weathed realted string and add it to the pool of possible greetings
                 .doOnNext(new Consumer<WEATHER_TYPE>() {
                     @Override
                     public void accept(WEATHER_TYPE weather_type) throws Exception {
@@ -220,6 +230,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
 //        int day = cal.get(Calendar.DAY_OF_WEEK);
         int mockDay = Calendar.MONDAY;
         if (mockDay == Calendar.MONDAY) {
+            //Add a greeting for the hardest day of the week to the pool of possible greetings
             greetings.add(view().getString(R.string.looking_good));
         }
     }

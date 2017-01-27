@@ -6,34 +6,45 @@ import android.view.View;
 
 import com.skyfishjy.library.RippleBackground;
 import com.wajumbie.robot.R;
+import com.wajumbie.robot.utils.UiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
     MockMainPresenter presenter;
+    //todo inject a real presenter when you have a real robot
+    // MainPresenter presenter;
 
     @BindView(R.id.slow_heart)
     RippleBackground slowHeart;
     @BindView(R.id.fast_heart)
     RippleBackground fastHeart;
 
+    public MainActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        hideSystemUI();
-        presenter = new MockMainPresenter(this);
-        slowHeart.startRippleAnimation();
+
+        presenter = new MockMainPresenter();
+        //todo inject a real presenter when you have a real robot
+        //presenter = new MainPresenter();
+        presenter.bindView(this);
+        UiUtils.showImmersiveMode(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        slowHeart.startRippleAnimation();
         presenter.startDetectingHumans();
     }
 
@@ -50,22 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void hideHeartbeat() {
         fastHeart.setVisibility(View.GONE);
-    }
-
-    /***
-     * Show fullscreen/immersive mode
-     */
-    private void hideSystemUI() {
-        // Set the IMMERSIVE flag.
-        // Set the content to appear under the system bars so that the content
-        // doesn't resize when the system bars hide and show.
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
 

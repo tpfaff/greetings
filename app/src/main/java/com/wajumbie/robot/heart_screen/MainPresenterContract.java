@@ -8,6 +8,5 @@ import com.aldebaran.qi.sdk.object.interaction.Human;
 
 public interface MainPresenterContract {
     void startDetectingHumans();
-
     void greetHuman(Human human);
 }
