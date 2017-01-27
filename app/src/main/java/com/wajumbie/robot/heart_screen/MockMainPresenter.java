@@ -88,7 +88,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
 
     @Override
     public void startDetectingHumans() {
-        Log.d(TAG, "startDetectingHumans");
+        Log.i(TAG, "startDetectingHumans");
 
         init();
 
@@ -131,7 +131,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
 
     @Override
     public void greetHuman(Human human) {
-        Log.d(TAG, "greetHuman");
+        Log.i(TAG, "greetHuman");
         int randomAnimationIndex = random.nextInt(greetings.size());
         Animation animation = Animation.fromResources(view(), animationIds.get(randomAnimationIndex % animationIds.size()));
         Animate animate = new Animate(view());
@@ -146,8 +146,7 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
         });
 
         Say say = new Say(view());
-        Log.e(TAG, "greetings size is " + greetings.size());
-        say.run(greetings.get(randomAnimationIndex));
+        say.run(greetings.get(randomAnimationIndex % greetings.size()));
     }
 
 
@@ -186,26 +185,23 @@ public class MockMainPresenter extends BasePresenter<List<Human>, MainActivity> 
                         return null;
                     }
                 })
-                //just grab a weathed realted string and add it to the pool of possible greetings
+                //just grab a weather related string and add it to the pool of possible greetings
                 .doOnNext(new Consumer<WEATHER_TYPE>() {
                     @Override
                     public void accept(WEATHER_TYPE weather_type) throws Exception {
                         if (weather_type != null) {
                             switch (weather_type) {
                                 case RAIN:
-                                    Log.e(TAG, "ADDING GREETING TO LIST WITH SIZE " + greetings.size());
                                     greetings.add(view().getString(R.string.weather_raining));
                                     greetings.remove(view().getString(R.string.weather_nice_day));
                                     greetings.remove(view().getString(R.string.weather_cloudy));
                                     break;
                                 case SHINE:
-                                    Log.e(TAG, "ADDING GREETING TO LIST WITH SIZE " + greetings.size());
                                     greetings.add(view().getString(R.string.weather_nice_day));
                                     greetings.remove(view().getString(R.string.weather_cloudy));
                                     greetings.remove(view().getString(R.string.weather_raining));
                                     break;
                                 case CLOUDY:
-                                    Log.e(TAG, "ADDING GREETING TO LIST WITH SIZE " + greetings.size());
                                     greetings.add(view().getString(R.string.weather_cloudy));
                                     greetings.remove(view().getString(R.string.weather_nice_day));
                                     greetings.remove(view().getString(R.string.weather_raining));
